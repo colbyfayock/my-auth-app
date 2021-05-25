@@ -1,11 +1,11 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import { signIn, signOut, useSession } from 'next-auth/client';
+import { signIn, signOut, useSession, getSession } from 'next-auth/client';
 
 import styles from '../styles/Home.module.css'
 
-export default function Home() {
-  const [session] = useSession();
+export default function Home({ session }) {
+  // const [session] = useSession();
   return (
     <div className={styles.container}>
       <Head>
@@ -75,4 +75,13 @@ export default function Home() {
       </footer>
     </div>
   )
+}
+
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+  return {
+    props: {
+      session
+    }
+  }
 }
